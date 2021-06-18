@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { RenderSong } from "./components/RenderSong";
+import "./App.css";
 
 function App() {
+  const [songContent, setSongContent] =
+    useState("");
+
+  const handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    const { value } = e.currentTarget;
+    setSongContent(value);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <textarea
+          cols={50}
+          rows={10}
+          value={songContent}
+          onChange={handleChange}
+        />
+        <button>render</button>
       </header>
+      <RenderSong />
     </div>
   );
 }
