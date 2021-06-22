@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { RenderSong } from "./components/RenderSong";
+import styled from "styled-components";
+
 // import "./App.css";
 
 function App() {
@@ -14,7 +16,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <Component>
       <header className="App-header">
         <textarea
           cols={50}
@@ -27,8 +29,12 @@ function App() {
       <RenderSong
         songContent={songContent}
       />
-    </div>
+    </Component>
   );
 }
+
+export const Component = styled.section`
+  background: #efd
+`;
 
 export default App;
