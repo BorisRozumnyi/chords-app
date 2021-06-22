@@ -24,13 +24,6 @@ export const isChords = (row: string) => {
     "#",
     "b",
   ];
-  const TONE_LAD = [
-    "m",
-    "maj",
-    "dim",
-    "+",
-    "sus",
-  ];
   let generated_list: string[] = [];
   CHORDS_LIST.forEach((c) => {
     generated_list.push(c);

@@ -32,14 +32,14 @@ export const RenderSong: React.FC<Props> =
           switch (rowType) {
             case "chords":
               return (
-                <Chords>{row}</Chords>
+                <Chords key={Date.now()}>{row}</Chords>
               );
             case "title":
               return (
-                <Title>{row}</Title>
+                <Title key={Date.now()}>{row}</Title>
               );
             default:
-              return <Text>{row}</Text>;
+              return <Text key={Date.now()}>{row}</Text>;
           }
         })}
       </Wrapper>
