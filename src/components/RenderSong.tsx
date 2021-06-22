@@ -2,6 +2,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import styled from "styled-components";
 
 type Props = {
   songContent: string;
@@ -68,14 +69,34 @@ export const RenderSong: React.FC<Props> =
     }, [songContent]);
 
     return (
-      <>
+      <Wrapper>
         {textRows.map((row) => {
           return isChords(row) ? (
-            <h3 key={row}>{row}</h3>
+            <Chords key={row}>
+              {row}
+            </Chords>
           ) : (
-            <p>{row}</p>
+            <Text>{row}</Text>
           );
         })}
-      </>
+      </Wrapper>
     );
   };
+
+export const Wrapper = styled.section`
+  grid-row: 2/2;
+  grid-column: 2/3;
+`;
+
+export const Content = styled.pre`
+  font-size: 16px;
+  font-family: monospace;
+`;
+
+export const Chords = styled(Content)`
+  color: #58911f;
+`;
+
+export const Text = styled(Content)`
+  color: #292825
+`;
