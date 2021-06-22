@@ -59,25 +59,45 @@ export const RenderSong: React.FC<Props> =
       return res;
     };
 
+    const isTitle = (row: string) => {
+      const c = [
+        "припев:",
+        "куплет:",
+        "бридж:",
+      ];
+      return c.some((m) =>
+        row.toLowerCase().includes(m)
+      );
+    };
+
     const [textRows, setTextRows] =
       useState([] as string[]);
     useEffect(() => {
       setTextRows(
         songContent.split("\n")
       );
-      isChords(textRows[1]);
     }, [songContent]);
 
     return (
       <Wrapper>
         {textRows.map((row) => {
-          return isChords(row) ? (
-            <Chords key={row}>
-              {row}
-            </Chords>
-          ) : (
-            <Text>{row}</Text>
-          );
+          let rowType = "text";
+          if (isChords(row))
+            rowType = "chords";
+          if (isTitle(row))
+            rowType = "title";
+          switch (rowType) {
+            case "chords":
+              return (
+                <Chords>{row}</Chords>
+              );
+            case "title":
+              return (
+                <Title>{row}</Title>
+              );
+            default:
+              return <Text>{row}</Text>;
+          }
         })}
       </Wrapper>
     );
@@ -93,10 +113,17 @@ export const Content = styled.pre`
   font-family: monospace;
 `;
 
+export const Title = styled.section`
+  background: #f1f5f1;
+  padding: 5px;
+  color: #58911f;
+  font-size: 26px;
+`;
+
 export const Chords = styled(Content)`
   color: #58911f;
 `;
 
 export const Text = styled(Content)`
-  color: #292825
+  color: #292825;
 `;
