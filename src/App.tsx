@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { RenderSong } from "./components/RenderSong";
 import styled from "styled-components";
 
-// import "./App.css";
-
-function App() {
+export const App = () => {
   const [songContent, setSongContent] =
     useState("");
+  const [editMode, setEditMode] =
+    useState(false);
 
   const handleChange = (
     e: React.FormEvent<HTMLTextAreaElement>
@@ -17,25 +17,31 @@ function App() {
 
   return (
     <Wrapper>
-      <EnteringContent
-        value={songContent}
-        onChange={handleChange}
-        placeholder="Enter text with chords"
-      />
-      <RenderSong
-        songContent={songContent}
-      />
+      {editMode ? (
+        <EnteringContent
+          value={songContent}
+          onChange={handleChange}
+          placeholder="Enter text with chords here"
+          onBlur={() =>
+            setEditMode(false)
+          }
+          autoFocus
+        />
+      ) : (
+        <RenderSong
+          songContent={songContent}
+          setEditMode={setEditMode}
+        />
+      )}
     </Wrapper>
   );
-}
+};
 
-export const Wrapper = styled.section`
+export const Wrapper = styled.div`
   display: grid;
   grid-template:
-    1fr / 1fr minmax(auto, 400px)
-    1fr;
-  min-height: 100vh;
-  background: #ebedf3;
+    1fr /
+    1fr minmax(auto, 400px) 1fr;
   padding: 20px 15px;
   color: #212529;
   font-family: "Roboto";
@@ -49,5 +55,3 @@ export const EnteringContent = styled.textarea`
   width: 100%;
   height: 100%;
 `;
-
-export default App;

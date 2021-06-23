@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.section`
-  grid-row: 2/2;
   grid-column: 2/3;
+  cursor: pointer;
 `;
 
 export const Content = styled.pre`
