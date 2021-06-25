@@ -1,7 +1,9 @@
 export const isTitle = (row: string) => {
   const c = [
-    "припев:",
+    "вступление:",
     "куплет:",
+    "припев:",
+    "проигрыш:",
     "бридж:",
   ];
   return c.some((m) =>
