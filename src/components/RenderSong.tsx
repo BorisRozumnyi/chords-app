@@ -31,7 +31,7 @@ export const RenderSong: FC<Props> =
       );
     }, [songContent]);
 
-    const list = textRows.map((row) => {
+    const list = textRows.map((row, i) => {
       let rowType = "text";
       if (isChords(row))
         rowType = "chords";
@@ -42,20 +42,20 @@ export const RenderSong: FC<Props> =
         case "chords":
           return (
             <Chords
-              key={Date.now()}
+              key={Date.now()+i}
             >
               {row}
             </Chords>
           );
         case "title":
           return (
-            <Title key={Date.now()}>
+            <Title key={Date.now()+i}>
               {row}
             </Title>
           );
         default:
           return (
-            <Text key={Date.now()}>
+            <Text key={Date.now()+i}>
               {row}
             </Text>
           );
