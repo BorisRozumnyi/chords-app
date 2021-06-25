@@ -10,17 +10,21 @@ export const Content = styled.pre`
   font-family: monospace;
 `;
 
-export const Title = styled.section`
+export const Title = styled.h3`
   background: #f1f5f1;
-  padding: 5px;
+  margin-bottom: 12px;
+  margin-top: 22px;
+  padding: 5px 26px;
   color: #58911f;
   font-size: 26px;
 `;
 
 export const Chords = styled(Content)`
+  margin: 0;
   color: #58911f;
 `;
 
 export const Text = styled(Content)`
+  margin-top: 2px;
   color: #292825;
 `;
