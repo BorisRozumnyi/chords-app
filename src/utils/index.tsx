@@ -1,12 +1,14 @@
+export const sectionTypes = [
+  "вступление:",
+  "куплет:",
+  "припев:",
+  "проигрыш:",
+  "бридж:",
+  "конец:",
+];
+
 export const isTitle = (row: string) => {
-  const c = [
-    "вступление:",
-    "куплет:",
-    "припев:",
-    "проигрыш:",
-    "бридж:",
-  ];
-  return c.some((m) =>
+  return sectionTypes.some((m) =>
     row.toLowerCase().includes(m)
   );
 };
@@ -21,6 +23,7 @@ export const isChords = (row: string) => {
     "F",
     "G",
     "H",
+    "|",
   ];
   const ALTERATION_SIGNS = [
     "#",
