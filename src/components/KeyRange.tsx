@@ -22,15 +22,20 @@ CHORDS_LIST.forEach((c) => {
 });
 
 type Props = {
-  prop?: (val: any) => void;
+  changeKey: (val: any) => void;
 };
 
 export const KeyRange: React.FC<Props> =
-  ({ prop }) => (
+  ({ changeKey }) => (
     <>
       <h1>KeyRange</h1>
       {generated_list.map((item) => (
-        <ChordButtom key={item}>
+        <ChordButtom
+          key={item}
+          onClick={() =>
+            changeKey(item)
+          }
+        >
           {item}
         </ChordButtom>
       ))}

@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { RenderSong } from "./components/RenderSong";
 import { KeyRange } from "./components/KeyRange";
-import { AppWrapper, Container, EnteringContent } from "./styles";
+import {
+  AppWrapper,
+  Container,
+  EnteringContent,
+} from "./styles";
 
 export const App = () => {
   const [songContent, setSongContent] =
     useState("");
   const [editMode, setEditMode] =
     useState(false);
+
+  const [keyOfSong, setKeyOfSong] =
+    useState("");
 
   const handleChange = (
     e: React.FormEvent<HTMLTextAreaElement>
@@ -16,10 +23,17 @@ export const App = () => {
     setSongContent(value);
   };
 
+  const changeKey = (key: string) => {
+    setKeyOfSong(key);
+  };
+
   return (
     <AppWrapper>
       <Container>
-        <KeyRange />
+        <KeyRange
+          changeKey={changeKey}
+        />
+        <h2>Tonality: {keyOfSong}</h2>
         {editMode ? (
           <EnteringContent
             value={songContent}
@@ -44,4 +58,3 @@ export const App = () => {
     </AppWrapper>
   );
 };
-
