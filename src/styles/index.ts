@@ -29,3 +29,27 @@ export const Text = styled(Content)`
   margin-bottom: 4px;
   color: #292825;
 `;
+
+export const ChordButtom = styled.button`
+  min-width: 35px;
+  min-height: 35px;
+  margin: 3px;
+  background: #efd;
+  padding: 3px;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 3px 1px #ccc;
+  color: green;
+  cursor: pointer;
+  transition: all .2s;
+  :hover {
+    box-shadow: 0 0 5px 1px #5c5757;
+    position: relative;
+    top: 2px;
+    transform: scale(1.05);
+  }
+  :active {
+    box-shadow: 0 0 3px 1px #ccc inset;
+    transform: translate(0, 1px) scale(.95);
+  }
+`;
