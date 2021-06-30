@@ -30,7 +30,11 @@ export const Text = styled(Content)`
   color: #292825;
 `;
 
-export const ChordButtom = styled.button`
+type ChordButtomProps = {
+  active: boolean;
+};
+
+export const ChordButtom = styled.button<ChordButtomProps>`
   min-width: 35px;
   min-height: 35px;
   margin: 3px;
@@ -41,7 +45,7 @@ export const ChordButtom = styled.button`
   box-shadow: 0 0 3px 1px #ccc;
   color: green;
   cursor: pointer;
-  transition: all .2s;
+  transition: all 0.2s;
   :hover {
     box-shadow: 0 0 5px 1px #5c5757;
     position: relative;
@@ -50,8 +54,15 @@ export const ChordButtom = styled.button`
   }
   :active {
     box-shadow: 0 0 3px 1px #ccc inset;
-    transform: translate(0, 1px) scale(.95);
+    transform: translate(0, 1px)
+      scale(0.95);
   }
+  ${({ active }) =>
+    active &&
+    `
+      background: #69BBFD;
+      color: #F9F9F9;
+    `}
 `;
 
 export const AppWrapper = styled.div`
