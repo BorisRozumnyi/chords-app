@@ -15,6 +15,7 @@ import { ChordContext } from "./utils/context";
 export const App = () => {
   const [songContent, setSongContent] =
     useState("");
+
   const [editMode, setEditMode] =
     useState(false);
 
@@ -22,6 +23,7 @@ export const App = () => {
     originTonality,
     setOriginTonality,
   ] = useState<string>("");
+
   const [
     currentTonality,
     setCurrentTonality,
@@ -35,9 +37,13 @@ export const App = () => {
 
     firstChord &&
       setOriginTonality(firstChord);
+
+    firstChord &&
+      !currentTonality &&
+      setCurrentTonality(firstChord);
   }, [songContent]);
 
-  const handleChange = (
+  const handleChangeEnteringContent = (
     e: React.FormEvent<HTMLTextAreaElement>
   ) => {
     const { value } = e.currentTarget;
@@ -59,7 +65,9 @@ export const App = () => {
           {editMode ? (
             <EnteringContent
               value={songContent}
-              onChange={handleChange}
+              onChange={
+                handleChangeEnteringContent
+              }
               placeholder="Enter text with chords here"
               onBlur={() =>
                 setEditMode(false)
