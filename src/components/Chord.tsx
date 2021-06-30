@@ -15,7 +15,7 @@ export const Chord: React.FC<Props> = ({
     originTonality,
     currentTonality,
   } = useContext(ChordContext);
-  if (!currentTonality)
+  if (currentTonality === originTonality)
     return <span>{children}</span>;
   else return <span>from {originTonality} to {currentTonality}</span>;
 };
