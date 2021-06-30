@@ -53,3 +53,26 @@ export const ChordButtom = styled.button`
     transform: translate(0, 1px) scale(.95);
   }
 `;
+
+export const AppWrapper = styled.div`
+  display: grid;
+  grid-template:
+    1fr /
+    1fr minmax(auto, 400px) 1fr;
+  padding: 0;
+  color: #212529;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18.75px;
+`;
+
+export const Container = styled.div`
+  grid-column: 2/3;
+`;
+
+export const EnteringContent = styled.textarea`
+  grid-column: 2;
+  width: 100%;
+  height: 100%;
+`;
