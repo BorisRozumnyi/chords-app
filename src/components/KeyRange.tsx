@@ -2,26 +2,8 @@ import React, {
   useContext,
 } from "react";
 import { ChordContext } from "../utils/context";
+import { TONALITIES } from "../utils/";
 import { ChordButtom } from "../styles";
-
-const CHORDS_LIST = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-];
-const ALTERATION_SIGNS = ["#", "b"];
-let generated_list: string[] = [];
-CHORDS_LIST.forEach((c) => {
-  generated_list.push(c);
-  ALTERATION_SIGNS.forEach((a) =>
-    generated_list.push(c + a)
-  );
-});
 
 export const KeyRange: React.FC =
   () => {
@@ -31,7 +13,7 @@ export const KeyRange: React.FC =
     } = useContext(ChordContext);
     return (
       <>
-        {generated_list.map((item) => (
+        {TONALITIES.map((item) => (
           <ChordButtom
             key={item}
             onClick={() =>

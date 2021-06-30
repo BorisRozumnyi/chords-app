@@ -1,3 +1,22 @@
+const CHORDS_LIST = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+];
+const ALTERATION_SIGNS = ["#", "b"];
+export let TONALITIES: string[] = [];
+CHORDS_LIST.forEach((c) => {
+  TONALITIES.push(c);
+  ALTERATION_SIGNS.forEach((a) =>
+    TONALITIES.push(c + a)
+  );
+});
+
 export const sectionTypes = [
   "вступление:",
   "куплет:",
@@ -14,35 +33,14 @@ export const isTitle = (row: string) => {
 };
 
 export const isChords = (row: string) => {
-  const CHORDS_LIST = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "|",
-  ];
-  const ALTERATION_SIGNS = [
-    "#",
-    "b",
-  ];
-  let generated_list: string[] = [];
-  CHORDS_LIST.forEach((c) => {
-    generated_list.push(c);
-    ALTERATION_SIGNS.forEach((a) =>
-      generated_list.push(c + a)
-    );
-  });
+  
   const chordsFromRow = row
     ?.split(" ")
     .filter((rowItem) => rowItem);
 
   const res = chordsFromRow?.every(
     (chordInput) => {
-      return generated_list.some(
+      return TONALITIES.some(
         (chord) => {
           return chordInput.includes(
             chord
