@@ -26,6 +26,7 @@ export const App = () => {
             setEditMode(false)
           }
           autoFocus
+          rows={songContent.split('\n').length}
         />
       ) : (
         <RenderSong
@@ -42,7 +43,7 @@ export const Wrapper = styled.div`
   grid-template:
     1fr /
     1fr minmax(auto, 400px) 1fr;
-  padding: 20px 15px;
+  padding: 0;
   color: #212529;
   font-family: "Roboto";
   font-weight: 400;
