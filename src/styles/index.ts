@@ -12,11 +12,11 @@ export const Content = styled.pre`
 
 export const Title = styled.h3`
   background: #f1f5f1;
-  margin-bottom: 12px;
-  margin-top: 22px;
-  padding: 5px 26px;
+  margin-bottom: 6px;
+  margin-top: 19px;
+  padding: 3px 26px;
   color: #58911f;
-  font-size: 26px;
+  font-size: 17px;
 `;
 
 export const Chords = styled(Content)`
@@ -26,5 +26,6 @@ export const Chords = styled(Content)`
 
 export const Text = styled(Content)`
   margin-top: 2px;
+  margin-bottom: 4px;
   color: #292825;
 `;
