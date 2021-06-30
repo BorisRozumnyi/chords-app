@@ -22,8 +22,10 @@ export const App = () => {
     originTonality,
     setOriginTonality,
   ] = useState<string>("");
-  const [currentTonality, setCurrentTonality] =
-    useState<string>("");
+  const [
+    currentTonality,
+    setCurrentTonality,
+  ] = useState<string>("");
 
   useEffect(() => {
     const firstChord = songContent
@@ -42,10 +44,6 @@ export const App = () => {
     setSongContent(value);
   };
 
-  const changeTonality = (key: string) => {
-    setCurrentTonality(key);
-  };
-
   return (
     <ChordContext.Provider
       value={{
@@ -57,10 +55,7 @@ export const App = () => {
     >
       <AppWrapper>
         <Container>
-          <KeyRange
-            changeKey={changeTonality}
-          />
-          <h2>Tonality: {currentTonality}</h2>
+          <KeyRange />
           {editMode ? (
             <EnteringContent
               value={songContent}

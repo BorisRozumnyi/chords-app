@@ -1,4 +1,6 @@
-import React, { useContext } from "react";
+import React, {
+  useContext,
+} from "react";
 import { ChordContext } from "../utils/context";
 import { ChordButtom } from "../styles";
 
@@ -21,25 +23,27 @@ CHORDS_LIST.forEach((c) => {
   );
 });
 
-type Props = {
-  changeKey: (val: any) => void;
-};
-
-export const KeyRange: React.FC<Props> =
-  ({ changeKey }) => {
-    const {currentTonality} = useContext(ChordContext);
-    return(
-    <>
-      {generated_list.map((item) => (
-        <ChordButtom
-          key={item}
-          onClick={() =>
-            changeKey(item)
-          }
-          active={item === currentTonality}
-        >
-          {item}
-        </ChordButtom>
-      ))}
-    </>
-  )};
+export const KeyRange: React.FC =
+  () => {
+    const {
+      currentTonality,
+      setCurrentTonality,
+    } = useContext(ChordContext);
+    return (
+      <>
+        {generated_list.map((item) => (
+          <ChordButtom
+            key={item}
+            onClick={() =>
+              setCurrentTonality(item)
+            }
+            active={
+              item === currentTonality
+            }
+          >
+            {item}
+          </ChordButtom>
+        ))}
+      </>
+    );
+  };
