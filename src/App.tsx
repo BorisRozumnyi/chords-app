@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
 import { RenderSong } from "./components/RenderSong";
 import { KeyRange } from "./components/KeyRange";
 import {
@@ -6,6 +9,8 @@ import {
   Container,
   EnteringContent,
 } from "./styles";
+import { isChords } from "./utils";
+import { ChordContext } from "./utils/context";
 
 export const App = () => {
   const [songContent, setSongContent] =
@@ -14,7 +19,17 @@ export const App = () => {
     useState(false);
 
   const [keyOfSong, setKeyOfSong] =
-    useState("");
+    useState<string>("");
+
+  useEffect(() => {
+    const firstChord = songContent
+      .split("\n")
+      .find((row) => isChords(row))
+      ?.split(" ")[0];
+
+    firstChord &&
+      setKeyOfSong(firstChord);
+  }, [songContent]);
 
   const handleChange = (
     e: React.FormEvent<HTMLTextAreaElement>
@@ -28,33 +43,40 @@ export const App = () => {
   };
 
   return (
-    <AppWrapper>
-      <Container>
-        <KeyRange
-          changeKey={changeKey}
-        />
-        <h2>Tonality: {keyOfSong}</h2>
-        {editMode ? (
-          <EnteringContent
-            value={songContent}
-            onChange={handleChange}
-            placeholder="Enter text with chords here"
-            onBlur={() =>
-              setEditMode(false)
-            }
-            autoFocus
-            rows={
-              songContent.split("\n")
-                .length
-            }
+    <ChordContext.Provider
+      value={{
+        tonality: keyOfSong,
+        setTonality: setKeyOfSong,
+      }}
+    >
+      <AppWrapper>
+        <Container>
+          <KeyRange
+            changeKey={changeKey}
           />
-        ) : (
-          <RenderSong
-            songContent={songContent}
-            setEditMode={setEditMode}
-          />
-        )}
-      </Container>
-    </AppWrapper>
+          <h2>Tonality: {keyOfSong}</h2>
+          {editMode ? (
+            <EnteringContent
+              value={songContent}
+              onChange={handleChange}
+              placeholder="Enter text with chords here"
+              onBlur={() =>
+                setEditMode(false)
+              }
+              autoFocus
+              rows={
+                songContent.split("\n")
+                  .length
+              }
+            />
+          ) : (
+            <RenderSong
+              songContent={songContent}
+              setEditMode={setEditMode}
+            />
+          )}
+        </Container>
+      </AppWrapper>
+    </ChordContext.Provider>
   );
 };
