@@ -1,28 +1,64 @@
 const T = [
-  "C",
-  "C#",
-  // "Cb",
-  "D",
-  "D#",
-  // "Db",
-  "E",
-  // "E#",
-  // "Eb",
-  "F",
-  "F#",
-  // "Fb",
-  "G",
-  "G#",
-  // "Gb",
-  // "H#",
-  // "Hb",
-  // "Ab",
-  "A",
-  // "A#",
-  "B",
-  // "B#",
-  // "Bb",
-  "H",
+  {
+    natural: "C",
+    enharmonicSharp: "H#",
+    enharmonicFlat: "",
+  },
+  {
+    natural: "C#",
+    enharmonicSharp: "",
+    enharmonicFlat: "Db",
+  },
+  {
+    natural: "D",
+    enharmonicSharp: "",
+    enharmonicFlat: "",
+  },
+  {
+    natural: "D#",
+    enharmonicSharp: "",
+    enharmonicFlat: "Eb",
+  },
+  {
+    natural: "E",
+    enharmonicSharp: "",
+    enharmonicFlat: "Fb",
+  },
+  {
+    natural: "F",
+    enharmonicSharp: "E#",
+    enharmonicFlat: "",
+  },
+  {
+    natural: "F#",
+    enharmonicSharp: "",
+    enharmonicFlat: "Gb",
+  },
+  {
+    natural: "G",
+    enharmonicSharp: "",
+    enharmonicFlat: "",
+  },
+  {
+    natural: "G#",
+    enharmonicSharp: "",
+    enharmonicFlat: "Ab",
+  },
+  {
+    natural: "A",
+    enharmonicSharp: "",
+    enharmonicFlat: "",
+  },
+  {
+    natural: "A#",
+    enharmonicSharp: "",
+    enharmonicFlat: "B",
+  },
+  {
+    natural: "H",
+    enharmonicSharp: "",
+    enharmonicFlat: "Cb",
+  },
 ];
 
 class Tonality {
@@ -33,51 +69,101 @@ class Tonality {
   getTonalitySteps(tonicChord: string) {
     const indexOfTonolity = T.findIndex(
       (tonality) =>
-        tonality.includes(tonicChord)
+        tonicChord.includes(
+          tonality.natural
+        )
+      // tonality.natural.includes(tonicChord)
     );
 
-    T.filter((tonality, i, arr) => {});
+    // T.filter((tonality, i, arr) => {});
 
     function* generateDurStep() {
       yield T[indexOfTonolity];
-      yield T[indexOfTonolity + 2] || T[T.length - indexOfTonolity-1  + 1];
-      yield T[indexOfTonolity + 4] || T[indexOfTonolity + 4 - T.length];
-      yield T[indexOfTonolity + 5] || T[indexOfTonolity  + 5 - T.length];
-      yield T[indexOfTonolity + 7] || T[indexOfTonolity  + 7 - T.length];
-      yield T[indexOfTonolity + 9] || T[indexOfTonolity  + 9 - T.length];
-      yield T[indexOfTonolity + 11] || T[indexOfTonolity  + 11 - T.length];
+      yield T[indexOfTonolity + 2] ||
+        T[
+          T.length - indexOfTonolity + 2
+        ];
+      yield T[indexOfTonolity + 4] ||
+        T[
+          indexOfTonolity + 4 - T.length
+        ];
+      yield T[indexOfTonolity + 5] ||
+        T[
+          indexOfTonolity + 5 - T.length
+        ];
+      yield T[indexOfTonolity + 7] ||
+        T[
+          indexOfTonolity + 7 - T.length
+        ];
+      yield T[indexOfTonolity + 9] ||
+        T[
+          indexOfTonolity + 9 - T.length
+        ];
+      yield T[indexOfTonolity + 11] ||
+        T[
+          indexOfTonolity +
+            11 -
+            T.length
+        ];
     }
 
     function* generateMollStep() {
       yield T[indexOfTonolity];
-      yield T[indexOfTonolity + 2] || T[T.length - indexOfTonolity-1  + 1];
-      yield T[indexOfTonolity + 3] || T[indexOfTonolity + 3 - T.length];
-      yield T[indexOfTonolity + 5] || T[indexOfTonolity  + 5 - T.length];
-      yield T[indexOfTonolity + 7] || T[indexOfTonolity  + 7 - T.length];
-      yield T[indexOfTonolity + 8] || T[indexOfTonolity  + 8 - T.length];
-      yield T[indexOfTonolity + 11] || T[indexOfTonolity  + 11 - T.length];
+      yield T[indexOfTonolity + 2] ||
+        T[
+          T.length - indexOfTonolity + 2
+        ];
+      yield T[indexOfTonolity + 3] ||
+        T[
+          indexOfTonolity + 3 - T.length
+        ];
+      yield T[indexOfTonolity + 5] ||
+        T[
+          indexOfTonolity + 5 - T.length
+        ];
+      yield T[indexOfTonolity + 7] ||
+        T[
+          indexOfTonolity + 7 - T.length
+        ];
+      yield T[indexOfTonolity + 8] ||
+        T[
+          indexOfTonolity + 8 - T.length
+        ];
+      yield T[indexOfTonolity + 11] ||
+        T[
+          indexOfTonolity +
+            11 -
+            T.length
+        ];
     }
 
     const major = generateDurStep();
     const minor = generateMollStep();
+    const harmony = tonicChord.includes(
+      "m"
+    )
+      ? minor
+      : major;
     let steps = [];
 
-
-    for (let value of minor) {
+    for (let value of harmony) {
       steps.push(value);
     }
-    // console.log(
-    //   T,
-    //   indexOfTonolity,
-    //   T.length,
-    //   T.length - indexOfTonolity
-    // );
+    // debugger
+    console.log(
+      // harmony,
+      // T,
+      tonicChord,
+      indexOfTonolity,
+      T.length,
+      T.length - indexOfTonolity
+    );
     return steps;
   }
 }
 
 console.log(
-  new Tonality().getTonalitySteps("C#")
+  new Tonality().getTonalitySteps("A")
 );
 
 const CHORDS_LIST = [
