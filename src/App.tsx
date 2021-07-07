@@ -55,7 +55,7 @@ export const App = () => {
 
     if (
       firstChord &&
-      tonalityInParentheses === null
+      !tonalityInParentheses
     ) {
       setOriginTonality(firstChord);
       setCurrentTonality(firstChord);
