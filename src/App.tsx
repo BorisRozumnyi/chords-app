@@ -30,17 +30,44 @@ export const App = () => {
   ] = useState<string>("");
 
   useEffect(() => {
+    const tonalityInParentheses =
+      songContent
+        .split("\n")[0]
+        .match(/\([A-H](#?|b?)(m?)\)/);
+
     const firstChord = songContent
       .split("\n")
       .find((row) => isChords(row))
       ?.split(" ")[0];
 
-    firstChord &&
-      setOriginTonality(firstChord);
+    if (tonalityInParentheses) {
+      const tonalityWithoutParentheses =
+        tonalityInParentheses[0]
+          .replace("(", "")
+          .replace(")", "");
+      setOriginTonality(
+        tonalityWithoutParentheses
+      );
+      setCurrentTonality(
+        tonalityWithoutParentheses
+      );
+    }
 
-    firstChord &&
-      !currentTonality &&
+    if (
+      firstChord &&
+      tonalityInParentheses === null
+    ) {
+      setOriginTonality(firstChord);
       setCurrentTonality(firstChord);
+    }
+
+    if (
+      firstChord &&
+      !tonalityInParentheses &&
+      !currentTonality
+    ) {
+      setCurrentTonality(firstChord);
+    }
   }, [songContent]);
 
   const handleChangeEnteringContent = (
