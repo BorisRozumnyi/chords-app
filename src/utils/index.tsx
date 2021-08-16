@@ -125,9 +125,13 @@ export class Tonality {
     while (count < 7) {
       const quartStep = ton[this.loopInRange(count * 5)];
       const fifthStep = ton[this.loopInRange(count * 7)];
-      count === 0 && result.withSharps.push(ton[0].natural) && result.withFlats.push(ton[0].natural);
-      count && result.withSharps.push(fifthStep.enharmonicSharp || fifthStep.natural);
-      count && result.withFlats.push(quartStep.enharmonicFlat || quartStep.natural);
+      count === 0 &&
+        result.withSharps.push(ton[0].natural) &&
+        result.withFlats.push(ton[0].natural);
+      count &&
+        result.withSharps.push(fifthStep.enharmonicSharp || fifthStep.natural);
+      count &&
+        result.withFlats.push(quartStep.enharmonicFlat || quartStep.natural);
       count++;
     }
 
