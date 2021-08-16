@@ -110,24 +110,24 @@ export class Tonality {
     return steps;
   }
 
-  fifthCircle() {
+  circleOfFifths() {
     const ton = this.getTonality();
 
     let count = 0;
-    let result = [];
-    while (count < 12) {
-      count === 0 && result.push(ton[0]);
-      count && result.push(ton[this.loopInRange(count * 7)]);
+    let result: any = {
+      withFlats: [],
+      withSharps: [],
+    };
+    while (count < 7) {
+      const quartStep = ton[this.loopInRange(count * 5)];
+      const fifthStep = ton[this.loopInRange(count * 7)];
+      count === 0 && result.withSharps.push(ton[0].natural) && result.withFlats.push(ton[0].natural);
+      count && result.withSharps.push(fifthStep.enharmonicSharp || fifthStep.natural);
+      count && result.withFlats.push(quartStep.enharmonicFlat || quartStep.natural);
       count++;
     }
 
-    return result.map((item, index, arr) => {
-      if (index < arr.length / 2) {
-        return item.natural || item.enharmonicSharp;
-      } else {
-        return item.enharmonicFlat || item.natural;
-      }
-    });
+    return result;
   }
 }
 

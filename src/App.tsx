@@ -45,7 +45,7 @@ export const App = () => {
   const testTonality = new Tonality().getTonalitySteps(currentTonality);
     console.log(
       '\n testTonality---', testTonality,
-      '\n fifthCircle()---', new Tonality().fifthCircle(),
+      '\n circleOfFifths()---', new Tonality().circleOfFifths(),
     );
 
   const handleChangeEnteringContent = (
