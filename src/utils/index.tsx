@@ -75,7 +75,11 @@ export class Tonality {
       if (tonicChord.includes('m')) {
         return tonicChord.replace('m', '') === tonality.natural;
       }
-      return tonicChord === tonality.natural;
+      return (
+        tonicChord === tonality.natural ||
+        tonicChord === tonality.enharmonicSharp ||
+        tonicChord === tonality.enharmonicFlat
+      );
     });
 
     function* generateDurStep() {
