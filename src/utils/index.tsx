@@ -71,9 +71,12 @@ export class Tonality {
   }
 
   getTonalitySteps(tonicChord: string) {
-    const indexOfTonolity = T.findIndex((tonality) =>
-      tonicChord.includes(tonality.natural),
-    );
+    const indexOfTonolity = T.findIndex((tonality) => {
+      if (tonicChord.includes('m')) {
+        return tonicChord.replace('m', '') === tonality.natural;
+      }
+      return tonicChord === tonality.natural;
+    });
 
     function* generateDurStep() {
       yield T[indexOfTonolity];
@@ -118,15 +121,13 @@ export class Tonality {
       count++;
     }
 
-    const test = result.map((item, index, arr) => {
+    return result.map((item, index, arr) => {
       if (index < arr.length / 2) {
         return item.natural || item.enharmonicSharp;
       } else {
         return item.enharmonicFlat || item.natural;
       }
     });
-
-    return test;
   }
 }
 
