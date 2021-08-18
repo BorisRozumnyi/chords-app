@@ -1,3 +1,8 @@
+type fromCircleOfFifths = {
+  withFlats: string[];
+  withSharps: string[];
+};
+
 const T = [
   {
     natural: 'C',
@@ -61,6 +66,44 @@ const T = [
   },
 ];
 
+const chordOrder = ['C', 'D', 'E', 'F', 'G', 'A', 'H'];
+
+const circleOfFifths = {
+  withFlats: [
+    'C',
+    'F',
+    'B',
+    'Eb',
+    'Ab',
+    'Db',
+    'Gb',
+    'Cb',
+    'Fb',
+    'A',
+    'D',
+    'G',
+    'C',
+  ],
+  withSharps: [
+    'C',
+    'G',
+    'D',
+    'A',
+    'E',
+    'H',
+    'F#',
+    'C#',
+    'G#',
+    'D#',
+    'A#',
+    'E#',
+    'H#',
+  ],
+};
+
+const sharpOrder = ['F', 'C', 'G', 'D', 'A', 'E', 'H'];
+const flatsOrder = ['H', 'E', 'A', 'D', 'G', 'C', 'F'];
+
 export class Tonality {
   getTonality() {
     return T;
@@ -68,6 +111,42 @@ export class Tonality {
 
   loopInRange(number: number) {
     return number % T.length;
+  }
+
+  getTonalitySteps2(tonicChord: string) {
+    const numberOfSharps = circleOfFifths.withSharps.findIndex(
+      (ton: string) => ton === tonicChord,
+    );
+    const numberOfFlats = circleOfFifths.withFlats.findIndex(
+      (ton: string) => ton === tonicChord,
+    );
+    const numberOfSigns =
+      numberOfSharps >= 0 ? `${numberOfSharps} #` : `${numberOfFlats} b`;
+
+    const indexOfOrder = chordOrder.findIndex((step) => {
+      return tonicChord.includes(step);
+    });
+    const copy = chordOrder.slice();
+    let restOfOrder = copy.splice(0, indexOfOrder);
+    let reorderedChordOrder = copy.concat(restOfOrder);
+    return reorderedChordOrder.map((step) => {
+      if (numberOfSigns.includes('#')) {
+        const stepsWithSings = sharpOrder.slice(0, numberOfSharps);
+        console.log(stepsWithSings);
+        const finded = stepsWithSings.find(
+          (stepForSing) => step === stepForSing,
+        );
+        return finded ? finded + '#' : step;
+      } else {
+        const stepsWithSings = flatsOrder.slice(0, numberOfFlats);
+        console.log(stepsWithSings);
+        const finded = stepsWithSings.find(
+          (stepForSing) => step === stepForSing,
+        );
+        const B = finded === 'H' ? 'B' : finded + 'b';
+        return finded ? B : step;
+      }
+    });
   }
 
   getTonalitySteps(tonicChord: string) {
@@ -118,11 +197,11 @@ export class Tonality {
     const ton = this.getTonality();
 
     let count = 0;
-    let result: any = {
+    let result: fromCircleOfFifths = {
       withFlats: [],
       withSharps: [],
     };
-    while (count < 7) {
+    while (count < 13) {
       const quartStep = ton[this.loopInRange(count * 5)];
       const fifthStep = ton[this.loopInRange(count * 7)];
       count === 0 &&

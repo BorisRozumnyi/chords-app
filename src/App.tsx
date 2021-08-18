@@ -42,11 +42,7 @@ export const App = () => {
     }
   }, [songContent]);
 
-  const testTonality = new Tonality().getTonalitySteps(currentTonality);
-    console.log(
-      '\n testTonality---', testTonality,
-      '\n circleOfFifths()---', new Tonality().circleOfFifths(),
-    );
+  console.log('\n gama---', new Tonality().getTonalitySteps2(currentTonality));
 
   const handleChangeEnteringContent = (
     e: React.FormEvent<HTMLTextAreaElement>,
