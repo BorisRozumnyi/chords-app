@@ -114,14 +114,19 @@ export class Tonality {
   }
 
   getTonalitySteps2(tonicChord: string) {
+    const isMinor = /[A-H](#?|b?)(m)/.test(tonicChord);
     const numberOfSharps = circleOfFifths.withSharps.findIndex(
       (ton: string) => ton === tonicChord,
     );
     const numberOfFlats = circleOfFifths.withFlats.findIndex(
       (ton: string) => ton === tonicChord,
     );
-    const numberOfSigns =
-      numberOfSharps >= 0 ? `${numberOfSharps} #` : `${numberOfFlats} b`;
+    let numberOfSigns = '';
+    if (numberOfSharps >= 0) {
+      numberOfSigns = `${numberOfSharps} #`;
+    } else if (numberOfFlats >= 0) {
+      numberOfSigns = `${numberOfFlats} b`;
+    }
 
     const indexOfOrder = chordOrder.findIndex((step) => {
       return tonicChord.includes(step);
@@ -129,17 +134,18 @@ export class Tonality {
     const copy = chordOrder.slice();
     let restOfOrder = copy.splice(0, indexOfOrder);
     let reorderedChordOrder = copy.concat(restOfOrder);
+
+    console.log(numberOfSigns, 'isMinor:', isMinor, reorderedChordOrder);
     return reorderedChordOrder.map((step) => {
+      // console.log(step, flatsOrder, sharpOrder);
       if (numberOfSigns.includes('#')) {
         const stepsWithSings = sharpOrder.slice(0, numberOfSharps);
-        console.log(stepsWithSings);
         const finded = stepsWithSings.find(
           (stepForSing) => step === stepForSing,
         );
         return finded ? finded + '#' : step;
       } else {
         const stepsWithSings = flatsOrder.slice(0, numberOfFlats);
-        console.log(stepsWithSings);
         const finded = stepsWithSings.find(
           (stepForSing) => step === stepForSing,
         );
