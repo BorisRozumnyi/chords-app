@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { RenderSong } from './components/RenderSong';
 import { KeyRange } from './components/KeyRange';
 import { AppWrapper, Container, EnteringContent } from './styles';
 import { isChords, Tonality } from './utils';
 import { ChordContext } from './utils/context';
+import { TransportField } from './components/TransportField';
 
 export const App = () => {
   const [songContent, setSongContent] = useState('');
@@ -13,6 +14,13 @@ export const App = () => {
   const [originTonality, setOriginTonality] = useState<string>('');
 
   const [currentTonality, setCurrentTonality] = useState<string>('');
+
+  const [transposeValue, setTransposeValue] = useState(0);
+
+  const handleTransposeBySemitones = (e: FormEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    setTransposeValue(Number(value));
+  };
 
   useEffect(() => {
     const tonalityInParentheses = songContent
@@ -63,6 +71,8 @@ export const App = () => {
       <AppWrapper>
         <Container>
           <KeyRange />
+          <TransportField handleChange={handleTransposeBySemitones} />
+          {transposeValue}
           {editMode ? (
             <EnteringContent
               value={songContent}
