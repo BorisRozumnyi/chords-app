@@ -2,7 +2,7 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import { RenderSong } from './components/RenderSong';
 import { KeyRange } from './components/KeyRange';
 import { AppWrapper, Container, EnteringContent } from './styles';
-import { isChords, getTonalitySteps, getTransposedKey } from './utils';
+import { isChords, getTransposedKey } from './utils';
 import { ChordContext } from './utils/context';
 import { TransportField } from './components/TransportField';
 
@@ -48,12 +48,11 @@ export const App = () => {
     if (firstChord && !tonalityInParentheses && !currentTonality) {
       setCurrentTonality(firstChord);
     }
-  }, [songContent]);
 
-  console.log(
-    '\n gama---',
-    getTonalitySteps(getTransposedKey(currentTonality, transposeValue)),
-  );
+    if (transposeValue) {
+      setCurrentTonality(getTransposedKey(originTonality, transposeValue));
+    }
+  }, [songContent, transposeValue]);
 
   const handleChangeEnteringContent = (
     e: React.FormEvent<HTMLTextAreaElement>,
@@ -75,7 +74,6 @@ export const App = () => {
         <Container>
           <KeyRange />
           <TransportField handleChange={handleTransposeBySemitones} />
-          {getTransposedKey(currentTonality, transposeValue)}
           {editMode ? (
             <EnteringContent
               value={songContent}
