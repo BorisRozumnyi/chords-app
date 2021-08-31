@@ -317,11 +317,12 @@ export const transposeChord = (
   });
 
   if (chord.includes('/'))
-    return `${currentTonalitySteps[indexes[0]]}/${
-      currentTonalitySteps[indexes[1]]
-    }`;
+    return chord
+      .replace(/[A-H](#?|b?)/g, currentTonalitySteps[indexes[0]])
+      .replace(/\/[A-H](#?|b?)/g, `/${currentTonalitySteps[indexes[1]]}`);
+
   return chord.replace(/[A-H]/g, currentTonalitySteps[indexes[0]]);
-}
+};
 
 export const sectionTypes = [
   'вступление:',
