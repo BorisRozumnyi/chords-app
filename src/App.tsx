@@ -2,7 +2,7 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import { RenderSong } from './components/RenderSong';
 import { KeyRange } from './components/KeyRange';
 import { AppWrapper, Container, EnteringContent } from './styles';
-import { isChords, getTransposedKey } from './utils';
+import { isChords, getTransposedKey, getTonalitySteps } from './utils';
 import { ChordContext } from './utils/context';
 import { TransportField } from './components/TransportField';
 
@@ -17,11 +17,13 @@ export const App = () => {
 
   const [transposeValue, setTransposeValue] = useState(0);
 
+  const [originTonalitySteps, setOriginTonalitySteps] = useState<string[]>([]);
+  const [currentTonalitySteps, setCurrentTonalitySteps] = useState<string[]>([]);
+
   const handleTransposeBySemitones = (e: FormEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     setTransposeValue(Number(value));
   };
-
   useEffect(() => {
     const tonalityInParentheses = songContent
       .split('\n')[0]
@@ -54,6 +56,14 @@ export const App = () => {
     }
   }, [songContent, transposeValue]);
 
+  useEffect(() => {
+    setOriginTonalitySteps(getTonalitySteps(originTonality));
+  }, [originTonality]);
+
+  useEffect(() => {
+    setCurrentTonalitySteps(getTonalitySteps(currentTonality));
+  }, [currentTonality]);
+
   const handleChangeEnteringContent = (
     e: React.FormEvent<HTMLTextAreaElement>,
   ) => {
@@ -66,8 +76,12 @@ export const App = () => {
       value={{
         originTonality,
         currentTonality,
+        originTonalitySteps,
+        currentTonalitySteps,
         setOriginTonality,
         setCurrentTonality,
+        setOriginTonalitySteps,
+        setCurrentTonalitySteps,
       }}
     >
       <AppWrapper>
