@@ -251,22 +251,18 @@ export const getTonalitySteps = (tonicChord: string) => {
   const tonalitySteps = reorderedChordOrder.map((step) => {
     if (numberOfSigns.includes('#')) {
       const stepsWithSings = sharpOrder.slice(0, numberOfSharps);
-      const finded = stepsWithSings.find(
-        (stepForSing) => step === stepForSing,
-      );
+      const finded = stepsWithSings.find((stepForSing) => step === stepForSing);
       return finded ? finded + '#' : step;
     } else {
       const stepsWithSings = flatsOrder.slice(0, numberOfFlats);
-      const finded = stepsWithSings.find(
-        (stepForSing) => step === stepForSing,
-      );
+      const finded = stepsWithSings.find((stepForSing) => step === stepForSing);
       const B = finded === 'H' ? 'B' : finded + 'b';
       return finded ? B : step;
     }
   });
 
   return tonalitySteps;
-}
+};
 
 const CHORDS_LIST = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'H'];
 const ALTERATION_SIGNS = ['#', 'b'];
@@ -309,6 +305,23 @@ export const getTransposedKey = (
     loopInRange(indexOfTonality + transposeValue, TONALITIES_HARDCODE.length)
   ];
 };
+
+export const transposeChord = (
+  chord: string,
+  originTonalitySteps: string[],
+  currentTonalitySteps: string[],
+) => {
+  let indexes: number[] = [];
+  originTonalitySteps.forEach((step, index) => {
+    if (chord.includes(step)) indexes.push(index);
+  });
+
+  if (chord.includes('/'))
+    return `${currentTonalitySteps[indexes[0]]}/${
+      currentTonalitySteps[indexes[1]]
+    }`;
+  return chord.replace(/[A-H]/g, currentTonalitySteps[indexes[0]]);
+}
 
 export const sectionTypes = [
   'вступление:',
