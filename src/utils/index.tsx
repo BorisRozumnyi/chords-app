@@ -3,6 +3,27 @@ type fromCircleOfFifths = {
   withSharps: string[];
 };
 
+export type note =
+  | 'C'
+  | 'C#'
+  | 'Cb'
+  | 'D'
+  | 'D#'
+  | 'Db'
+  | 'E'
+  | 'Eb'
+  | 'F'
+  | 'F#'
+  | 'Fb'
+  | 'G'
+  | 'G#'
+  | 'Gb'
+  | 'A'
+  | 'A#'
+  | 'Ab'
+  | 'B'
+  | 'H';
+
 const T = [
   {
     natural: 'C',
@@ -104,133 +125,27 @@ const circleOfFifths = {
 const sharpOrder = ['F', 'C', 'G', 'D', 'A', 'E', 'H'];
 const flatsOrder = ['H', 'E', 'A', 'D', 'G', 'C', 'F'];
 
-export class Tonality {
-  getTonality() {
-    return T;
-  }
-
-  loopInRange(number: number) {
-    return number % T.length;
-  }
-
-  getTonalitySteps2(tonicChord: string) {
-    const isMinor = /[A-H](#?|b?)(m)/.test(tonicChord);
-
-    const numberOfSharps = circleOfFifths.withSharps.findIndex(
-      (ton: string) => ton === tonicChord,
-    );
-    const numberOfFlats = circleOfFifths.withFlats.findIndex(
-      (ton: string) => ton === tonicChord,
-    );
-    let numberOfSigns = '';
-    if (numberOfSharps >= 0) {
-      numberOfSigns = `${numberOfSharps} #`;
-    } else if (numberOfFlats >= 0) {
-      numberOfSigns = `${numberOfFlats} b`;
-    }
-
-    const indexOfOrder = chordOrder.findIndex((step) => {
-      return tonicChord.includes(step);
-    });
-    const copy = chordOrder.slice();
-    let restOfOrder = copy.splice(0, indexOfOrder);
-    let reorderedChordOrder = copy.concat(restOfOrder);
-
-    const tonalitySteps = reorderedChordOrder.map((step) => {
-      if (numberOfSigns.includes('#')) {
-        const stepsWithSings = sharpOrder.slice(0, numberOfSharps);
-        const finded = stepsWithSings.find(
-          (stepForSing) => step === stepForSing,
-        );
-        return finded ? finded + '#' : step;
-      } else {
-        const stepsWithSings = flatsOrder.slice(0, numberOfFlats);
-        const finded = stepsWithSings.find(
-          (stepForSing) => step === stepForSing,
-        );
-        const B = finded === 'H' ? 'B' : finded + 'b';
-        return finded ? B : step;
-      }
-    });
-
-    return tonalitySteps;
-  }
-
-  getTonalitySteps(tonicChord: string) {
-    const indexOfTonolity = T.findIndex((tonality) => {
-      if (tonicChord.includes('m')) {
-        return tonicChord.replace('m', '') === tonality.natural;
-      }
-      return (
-        tonicChord === tonality.natural ||
-        tonicChord === tonality.enharmonicSharp ||
-        tonicChord === tonality.enharmonicFlat
-      );
-    });
-
-    function* generateDurStep() {
-      yield T[indexOfTonolity];
-      yield T[indexOfTonolity + 2] || T[T.length - indexOfTonolity + 2];
-      yield T[indexOfTonolity + 4] || T[indexOfTonolity + 4 - T.length];
-      yield T[indexOfTonolity + 5] || T[indexOfTonolity + 5 - T.length];
-      yield T[indexOfTonolity + 7] || T[indexOfTonolity + 7 - T.length];
-      yield T[indexOfTonolity + 9] || T[indexOfTonolity + 9 - T.length];
-      yield T[indexOfTonolity + 11] || T[indexOfTonolity + 11 - T.length];
-    }
-
-    function* generateMollStep() {
-      yield T[indexOfTonolity];
-      yield T[indexOfTonolity + 2] || T[T.length - indexOfTonolity + 2];
-      yield T[indexOfTonolity + 3] || T[indexOfTonolity + 3 - T.length];
-      yield T[indexOfTonolity + 5] || T[indexOfTonolity + 5 - T.length];
-      yield T[indexOfTonolity + 7] || T[indexOfTonolity + 7 - T.length];
-      yield T[indexOfTonolity + 8] || T[indexOfTonolity + 8 - T.length];
-      yield T[indexOfTonolity + 11] || T[indexOfTonolity + 11 - T.length];
-    }
-
-    const major = generateDurStep();
-    const minor = generateMollStep();
-    const harmony = tonicChord.includes('m') ? minor : major;
-    let steps = [];
-
-    for (let value of harmony) {
-      steps.push(value);
-    }
-
-    return steps;
-  }
-
-  circleOfFifths() {
-    const ton = this.getTonality();
-
-    let count = 0;
-    let result: fromCircleOfFifths = {
-      withFlats: [],
-      withSharps: [],
-    };
-    while (count < 13) {
-      const quartStep = ton[this.loopInRange(count * 5)];
-      const fifthStep = ton[this.loopInRange(count * 7)];
-      count === 0 &&
-        result.withSharps.push(ton[0].natural) &&
-        result.withFlats.push(ton[0].natural);
-      count &&
-        result.withSharps.push(fifthStep.enharmonicSharp || fifthStep.natural);
-      count &&
-        result.withFlats.push(quartStep.enharmonicFlat || quartStep.natural);
-      count++;
-    }
-
-    return result;
-  }
-}
+const getParallelMajorKey = (minorKey: string) => {
+  const note = minorKey.replace('m', '');
+  const indexOfKeyList = TONALITIES_HARDCODE.findIndex((noteFromList) =>
+    noteFromList.includes(note),
+  );
+  const parallelMajorKey = T[indexOfKeyList + 3];
+  return parallelMajorKey;
+};
 
 export const getTonalitySteps = (tonicChord: string) => {
   const isMinor = /[A-H](#?|b?)(m)/.test(tonicChord);
-
-  const numberOfSharps = circleOfFifths.withSharps.findIndex(
-    (ton: string) => ton === tonicChord,
+  if (isMinor) getParallelMajorKey(tonicChord);
+  console.log(
+    'isMinor', isMinor,
+    '\n tonicChord', tonicChord,
+    '\n major', getParallelMajorKey(tonicChord),
   );
+
+  const numberOfSharps = circleOfFifths.withSharps.findIndex((ton: string) => {
+    return ton === tonicChord;
+  });
   const numberOfFlats = circleOfFifths.withFlats.findIndex(
     (ton: string) => ton === tonicChord,
   );

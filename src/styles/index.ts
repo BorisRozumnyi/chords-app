@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Wrapper = styled.section`
   grid-column: 2/3;
@@ -54,8 +54,7 @@ export const ChordButtom = styled.button<ChordButtomProps>`
   }
   :active {
     box-shadow: 0 0 3px 1px #ccc inset;
-    transform: translate(0, 1px)
-      scale(0.95);
+    transform: translate(0, 1px) scale(0.95);
   }
   ${({ active }) =>
     active &&
@@ -72,7 +71,7 @@ export const AppWrapper = styled.div`
     1fr minmax(auto, 400px) 1fr;
   padding: 0;
   color: #212529;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: 400;
   font-size: 16px;
   line-height: 18.75px;
@@ -86,4 +85,9 @@ export const EnteringContent = styled.textarea`
   grid-column: 2;
   width: 100%;
   height: 100%;
+
+  font-family: monospace;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18.75px;
 `;
