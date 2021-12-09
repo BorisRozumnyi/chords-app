@@ -54,7 +54,7 @@ export const App = () => {
     if (transposeValue) {
       setCurrentTonality(getTransposedKey(originTonality, transposeValue));
     }
-  }, [songContent, transposeValue]);
+  }, [songContent, transposeValue, currentTonality, originTonality]);
 
   useEffect(() => {
     setOriginTonalitySteps(getTonalitySteps(originTonality));
