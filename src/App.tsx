@@ -1,4 +1,5 @@
 import React, { FormEvent, useEffect, useState } from 'react';
+import { GlobalStyle } from './styles/GlobalStyle';
 import { RenderSong } from './components/RenderSong';
 import { KeyRange } from './components/KeyRange';
 import { AppWrapper, Container, EnteringContent } from './styles';
@@ -18,7 +19,9 @@ export const App = () => {
   const [transposeValue, setTransposeValue] = useState(0);
 
   const [originTonalitySteps, setOriginTonalitySteps] = useState<string[]>([]);
-  const [currentTonalitySteps, setCurrentTonalitySteps] = useState<string[]>([]);
+  const [currentTonalitySteps, setCurrentTonalitySteps] = useState<string[]>(
+    [],
+  );
 
   const handleTransposeBySemitones = (e: FormEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -84,6 +87,7 @@ export const App = () => {
         setCurrentTonalitySteps,
       }}
     >
+      <GlobalStyle />
       <AppWrapper>
         <Container>
           <KeyRange />
