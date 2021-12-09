@@ -29,3 +29,65 @@ export const Text = styled(Content)`
   margin-bottom: 4px;
   color: #292825;
 `;
+
+type ChordButtomProps = {
+  active: boolean;
+};
+
+export const ChordButtom = styled.button<ChordButtomProps>`
+  min-width: 35px;
+  min-height: 35px;
+  margin: 3px;
+  background: #efd;
+  padding: 3px;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 3px 1px #ccc;
+  color: green;
+  cursor: pointer;
+  transition: all 0.2s;
+  :hover {
+    box-shadow: 0 0 5px 1px #5c5757;
+    position: relative;
+    top: 2px;
+    transform: scale(1.05);
+  }
+  :active {
+    box-shadow: 0 0 3px 1px #ccc inset;
+    transform: translate(0, 1px) scale(0.95);
+  }
+  ${({ active }) =>
+    active &&
+    `
+      background: #69BBFD;
+      color: #F9F9F9;
+    `}
+`;
+
+export const AppWrapper = styled.div`
+  display: grid;
+  grid-template:
+    1fr /
+    1fr minmax(auto, 400px) 1fr;
+  padding: 0;
+  color: #212529;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18.75px;
+`;
+
+export const Container = styled.div`
+  grid-column: 2/3;
+`;
+
+export const EnteringContent = styled.textarea`
+  grid-column: 2;
+  width: 100%;
+  height: 100%;
+
+  font-family: monospace;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18.75px;
+`;

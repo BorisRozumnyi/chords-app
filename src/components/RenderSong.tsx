@@ -1,6 +1,7 @@
 import { useEffect, useState, FC, Dispatch, SetStateAction } from 'react';
 import { isChords, isTitle } from '../utils';
 import { Wrapper, Chords, Title, Text } from '../styles';
+import { Chord } from '../components/Chord';
 
 type Props = {
   songContent: string;
@@ -20,7 +21,15 @@ export const RenderSong: FC<Props> = ({ songContent, setEditMode }) => {
 
     switch (rowType) {
       case 'chords':
-        return <Chords key={Date.now() + i}>{row}</Chords>;
+        return (
+          <Chords key={Date.now() + i}>
+            {row
+              .split(' ')
+              .map((chord, i) =>
+                chord ? <Chord key={chord + i}>{chord}</Chord> : ' ',
+              )}
+          </Chords>
+        );
       case 'title':
         return <Title key={Date.now() + i}>{row}</Title>;
       default:
