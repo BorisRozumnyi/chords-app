@@ -182,7 +182,9 @@ const ALTERATION_SIGNS = ['#', 'b'];
 export let TONALITIES: string[] = [];
 CHORDS_LIST.forEach((c) => {
   TONALITIES.push(c);
-  ALTERATION_SIGNS.forEach((a) => TONALITIES.push(c + a));
+  ALTERATION_SIGNS.forEach((a) => {
+    if (c !== 'B') if (!(c === 'H' && a === 'b')) TONALITIES.push(c + a);
+  });
 });
 
 const TONALITIES_HARDCODE = [
