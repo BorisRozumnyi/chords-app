@@ -27,6 +27,7 @@ export const App = () => {
     const { value } = e.currentTarget;
     setTransposeValue(Number(value));
   };
+
   useEffect(() => {
     const tonalityInParentheses = songContent
       .split('\n')[0]
@@ -46,8 +47,8 @@ export const App = () => {
     }
 
     if (firstChord && !tonalityInParentheses) {
-      setOriginTonality(firstChord);
-      setCurrentTonality(firstChord);
+      !originTonality && setOriginTonality(firstChord);
+      !currentTonality && setCurrentTonality(firstChord);
     }
 
     if (firstChord && !tonalityInParentheses && !currentTonality) {
