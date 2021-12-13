@@ -13,8 +13,8 @@ export const KeyRange: FC = () => {
     const offsetWidth = RangeContainerRef.current?.offsetWidth || 0;
     const mousePosition = (clientX || 0) - (offsetLeft || 0);
     const x = (factor: number) => mousePosition - offsetWidth * factor;
-    const multiplierToScrollRight = 0.7;
-    const multiplierToScrollLeft = 0.3;
+    const multiplierToScrollRight = 0.8;
+    const multiplierToScrollLeft = 0.2;
     if (mousePosition > offsetWidth * multiplierToScrollRight)
       RangeContainerRef.current?.scrollBy(x(multiplierToScrollRight), 0);
     if (mousePosition < offsetWidth * multiplierToScrollLeft)
