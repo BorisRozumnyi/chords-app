@@ -132,14 +132,6 @@ const getParallelMajorKey = (minorKey: string) => {
 export const getTonalitySteps = (tonicChord: string) => {
   const isMinor = /[A-H](#?|b?)(m)/.test(tonicChord);
   if (isMinor) getParallelMajorKey(tonicChord);
-  console.log(
-    'isMinor',
-    isMinor,
-    '\n tonicChord',
-    tonicChord,
-    '\n major',
-    getParallelMajorKey(tonicChord),
-  );
 
   const numberOfSharps = circleOfFifths.withSharps.findIndex((ton: string) => {
     return ton === tonicChord;

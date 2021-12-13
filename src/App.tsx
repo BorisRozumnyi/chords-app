@@ -18,12 +18,15 @@ export const App = () => {
   const [transposeValue, setTransposeValue] = useState(0);
 
   const [originTonalitySteps, setOriginTonalitySteps] = useState<string[]>([]);
-  const [currentTonalitySteps, setCurrentTonalitySteps] = useState<string[]>([]);
+  const [currentTonalitySteps, setCurrentTonalitySteps] = useState<string[]>(
+    [],
+  );
 
   const handleTransposeBySemitones = (e: FormEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     setTransposeValue(Number(value));
   };
+
   useEffect(() => {
     const tonalityInParentheses = songContent
       .split('\n')[0]
@@ -43,8 +46,8 @@ export const App = () => {
     }
 
     if (firstChord && !tonalityInParentheses) {
-      setOriginTonality(firstChord);
-      setCurrentTonality(firstChord);
+      !originTonality && setOriginTonality(firstChord);
+      !currentTonality && setCurrentTonality(firstChord);
     }
 
     if (firstChord && !tonalityInParentheses && !currentTonality) {
