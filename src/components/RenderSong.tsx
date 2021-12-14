@@ -1,4 +1,11 @@
-import { useEffect, useState, FC, Dispatch, SetStateAction } from 'react';
+import React, {
+  useEffect,
+  useState,
+  FC,
+  Dispatch,
+  SetStateAction,
+  ReactNode,
+} from 'react';
 import { isChords, isTitle } from '../utils';
 import { Wrapper, Chords, Title, Text } from '../styles';
 import { Chord } from '../components/Chord';
@@ -9,6 +16,7 @@ type Props = {
 };
 
 export const RenderSong: FC<Props> = ({ songContent, setEditMode }) => {
+  const [text, setText] = useState('');
   const [textRows, setTextRows] = useState([] as string[]);
   useEffect(() => {
     setTextRows(songContent.split('\n'));
@@ -37,9 +45,21 @@ export const RenderSong: FC<Props> = ({ songContent, setEditMode }) => {
     }
   });
 
+  const handleChange = ({
+    currentTarget,
+  }: React.ChangeEvent<HTMLTableSectionElement>) => {
+    console.dir(currentTarget?.innerText);
+    setText(currentTarget?.innerText);
+  };
+
   return (
-    <Wrapper onClick={() => setEditMode(true)}>
-      {songContent ? list : 'Click to enter text'}
+    <Wrapper
+      onClick={() => setEditMode(true)}
+      contentEditable
+      suppressContentEditableWarning
+      onInput={handleChange}
+    >
+      {text}
     </Wrapper>
   );
 };

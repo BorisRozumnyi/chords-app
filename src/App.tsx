@@ -1,14 +1,15 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { GlobalStyle } from './styles/GlobalStyle';
-import { RenderSong } from './components/RenderSong';
+// import { RenderSong } from './components/RenderSong';
 import { KeyRange } from './components/KeyRange';
 import { AppWrapper, Container, EnteringContent } from './styles';
 import { isChords, getTransposedKey, getTonalitySteps } from './utils';
 import { ChordContext } from './utils/context';
 import { TransportField } from './components/TransportField';
+import { SongContent } from './components/SongContent';
 
 export const App = () => {
-  const [songContent, setSongContent] = useState('');
+  const [songContent/* , setSongContent */] = useState('');
 
   const [editMode, setEditMode] = useState(false);
 
@@ -68,12 +69,12 @@ export const App = () => {
     setCurrentTonalitySteps(getTonalitySteps(currentTonality));
   }, [currentTonality]);
 
-  const handleChangeEnteringContent = (
+  /* const handleChangeEnteringContent = (
     e: React.FormEvent<HTMLTextAreaElement>,
   ) => {
     const { value } = e.currentTarget;
     setSongContent(value);
-  };
+  }; */
 
   return (
     <ChordContext.Provider
@@ -93,7 +94,7 @@ export const App = () => {
         <Container>
           <KeyRange />
           <TransportField handleChange={handleTransposeBySemitones} />
-          {editMode ? (
+{/*           {editMode ? (
             <EnteringContent
               value={songContent}
               onChange={handleChangeEnteringContent}
@@ -104,7 +105,8 @@ export const App = () => {
             />
           ) : (
             <RenderSong songContent={songContent} setEditMode={setEditMode} />
-          )}
+          )} */}
+          <SongContent songContent={<h2>test<span>*1</span><span>*2</span></h2>} />
         </Container>
       </AppWrapper>
     </ChordContext.Provider>

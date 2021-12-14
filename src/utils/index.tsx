@@ -245,8 +245,9 @@ export const isTitle = (row: string) => {
 };
 
 export const isChords = (row: string) => {
-  const chordsFromRow = row?.split(' ').filter((rowItem) => rowItem);
-
+  const reg = /\b([A-H])(#|b?)(m?)([1-7,9]?)\b/g;
+  const chordsFromRow = row?.split(' '); /* .filter((rowItem) => rowItem) */
+  console.log(row, reg.exec(row), row.match(reg));
   const res = chordsFromRow?.every((chordInput) => {
     return TONALITIES.some((chord) => {
       return chordInput.includes(chord);
