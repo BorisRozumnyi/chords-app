@@ -24,4 +24,8 @@ describe('isChords', () => {
   it('F#m', () => {
     expect(isChords('F#m')).toBeTruthy();
   });
+
+  it('with spaces before a chord', () => {
+    expect(isChords('  F')).toBe(true);
+  });
 });

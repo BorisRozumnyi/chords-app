@@ -244,19 +244,32 @@ export const isTitle = (row: string) => {
   return sectionTypes.some((m) => row.toLowerCase().includes(m));
 };
 
+const spaceReg = /\s+/g;
+const chordReg = /\b([A-H])(#|b?)(m?)([1-7,9]?)\b/;
+
 export const isChords = (row: string) => {
-  const chordReg = /\b([A-H])(#|b?)(m?)([1-7,9]?)\b/;
-  const spaceReg = /\s+/;
   const chordsFromRow = row.split(spaceReg);
+  if (row.match(spaceReg)) chordsFromRow.shift();
   return chordsFromRow.every((chordInput) => chordReg.test(chordInput));
 };
 
 export const renderSong = (html: string) => {
   const chordsRow = (row: string) => {
-    const splitedBySpaces = row.split(/\s+/g);
-    const spaces = Array.from(row.matchAll(/\s+/g));
+    const splitedBySpaces = row.split(spaceReg);
+    const spaces = Array.from(row.matchAll(spaceReg));
+
+    if (spaceReg.exec(row)?.index === 0) {
+      splitedBySpaces.shift();
+      return `<pre>${splitedBySpaces
+        .map((chord, i) => `${spaces[i]}<i class="chord">${chord}</i>`)
+        .join('')}</pre>`;
+    }
+
     return `<pre>${splitedBySpaces
-      .map((chord, i) => `<i>${chord}</i>${spaces[i] ? spaces[i] : ''}`)
+      .map(
+        (chord, i) =>
+          `<i class="chord">${chord}</i>${spaces[i] ? spaces[i] : ''}`,
+      )
       .join('')}</pre>`;
   };
 
