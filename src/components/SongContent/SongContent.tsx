@@ -1,33 +1,29 @@
-import { useEffect, useState, useRef, FC, ReactNode } from 'react';
+import { useState, useRef, FC, ReactNode } from 'react';
 import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
-import { isChords } from '../../utils';
+import { renderSong } from '../../utils';
 
 type Props = {
   songContent: string | ReactNode;
-  // songContent: : string | CatalogComponentProps;
 };
 
 export const SongContent: FC<Props> = ({ songContent }) => {
   const text = useRef('');
+  const [textState, setTextState] = useState(text.current);
 
-  const handleChange = (e: ContentEditableEvent) => {
-    text.current = e.currentTarget.innerHTML;
-    console.log(text.current);
+  const handleChange = ({ currentTarget }: ContentEditableEvent) => {
+    text.current = currentTarget.innerHTML;
   };
 
   const handleBlur = () => {
-    const sp = text.current
-      .split('<div>')
-      .map((row) => row.replace('</div>', '').replace('&nbsp;', ''));
-    const res = sp.map((row) => isChords(row));
-    console.log(text.current, sp, res);
+    setTextState(renderSong(text.current));
   };
 
   return (
     <ContentEditable
-      html={text.current}
+      html={textState}
       onBlur={handleBlur}
       onChange={handleChange}
+      className="content-editable"
     />
   );
 };
