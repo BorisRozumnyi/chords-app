@@ -250,3 +250,24 @@ export const isChords = (row: string) => {
   const chordsFromRow = row.split(spaceReg);
   return chordsFromRow.every((chordInput) => chordReg.test(chordInput));
 };
+
+export const renderSong = (html: string) => {
+  const chordsRow = (row: string) => {
+    const splitedBySpaces = row.split(/\s+/g);
+    const spaces = Array.from(row.matchAll(/\s+/g));
+    return `<pre>${splitedBySpaces
+      .map((chord, i) => `<i>${chord}</i>${spaces[i] ? spaces[i] : ''}`)
+      .join('')}</pre>`;
+  };
+
+  const splited = html
+    .split('<div>')
+    .map((row) => row.replace('</div>', '').replaceAll('&nbsp;', ''));
+
+  const maped = splited.map((row) => {
+    if (isChords(row)) return chordsRow(row);
+    return `<p>${row}</p>`;
+  });
+
+  return maped.join('');
+};
